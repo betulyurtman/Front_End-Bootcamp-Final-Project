@@ -6,24 +6,26 @@ import Link from 'next/link';
 
 const BookList = () => {
   const dispatch = useDispatch();
-  const { books, loadingBooks, error } = useSelector((state) => state.books);
+  const { books, loadingBooks, error, searchResults, loadingSearch } = useSelector((state) => state.books);
 
   useEffect(() => {
     dispatch(fetchBooks());
   }, [dispatch]);
 
-  if (loadingBooks) return <p>Loading...</p>;
+  const displayBooks = searchResults.length > 0 ? searchResults : books;
+
+  if (loadingBooks || loadingSearch) return <p>Loading...</p>;
   if (error) return <p>Error occurred: {error}</p>;
 
   return (
     <Grid container spacing={2}>
-      {books.map((book) => (
-        <Grid item xs={12} sm={6} md={4} key={book.id}>
-          <Card sx={{ maxWidth: 345, height: '100%', display: 'flex', flexDirection: 'column' }}>
+      {displayBooks.map((book, index) => (
+        <Grid item xs={12} sm={6} md={4} key={book.id || `book-${index}`}>
+          <Card sx={{ maxWidth: 345, '&:hover': { boxShadow: 6 }, height: '100%', display: 'flex', flexDirection: 'column' }}>
             <CardMedia
               component="img"
               height="250"
-              image={book.thumbnail || '/default-book-thumbnail.jpg'}
+              image={book.thumbnail || 'https://images.pexels.com/photos/3358707/pexels-photo-3358707.png'}
               alt={book.title}
               sx={{ height: 150, objectFit: 'contain' }}
             />

@@ -3,11 +3,13 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { styled, alpha } from '@mui/material/styles';
 import { Stack } from '@mui/material';
 import { Bookmark, MenuBook} from '@mui/icons-material';
 import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { searchBooks, setSearchResults } from '@/pages/store/bookSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -25,16 +27,6 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  height: '100%',
-  position: 'absolute',
-  pointerEvents: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-}));
-
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
@@ -50,10 +42,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const DashboardLayout = ({ children }) => {
     const router = useRouter();
+    const dispatch = useDispatch();
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleBackClick = () => {
       router.push('/');
     };
+
+    const handleSearch = () => {
+        if (searchQuery.trim() !== '') {
+          dispatch(searchBooks(searchQuery));
+        } else {
+            dispatch(setSearchResults([]));
+        }
+      };
 
   return (
     <>
@@ -67,12 +69,15 @@ const DashboardLayout = ({ children }) => {
           </IconButton>
           <Stack sx={{ flexGrow: 1 }} />
           <Search>
-            <SearchIconWrapper>
+            <IconButton onClick={handleSearch} color="inherit">   
               <SearchIcon />
-            </SearchIconWrapper>
+              </IconButton>
             <StyledInputBase
               placeholder="Search…"
               inputProps={{ 'aria-label': 'search' }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             />
           </Search>
           <IconButton color="inherit">

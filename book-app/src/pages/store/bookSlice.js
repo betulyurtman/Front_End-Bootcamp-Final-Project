@@ -5,6 +5,8 @@ const initialState = {
   books: [],
   loadingBooks: false,
   error: null,
+  searchResults: [],
+  loadingSearch: false,
 };
 
 export const fetchBooks = createAsyncThunk(
@@ -18,7 +20,11 @@ export const fetchBooks = createAsyncThunk(
 const bookSlice = createSlice({
   name: 'book',
   initialState,
-  reducers: {},
+  reducers: {
+    setSearchResults: (state, action) => {
+      state.searchResults = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchBooks.pending, (state) => {
@@ -34,5 +40,26 @@ const bookSlice = createSlice({
       });
   },
 });
+
+export const { setSearchResults } = bookSlice.actions;
+
+export const searchBooks = (searchQuery) => (dispatch, getState) => {
+  const { books } = getState().books;
+
+  // Clear previous search results
+  dispatch(setSearchResults([]));
+
+  if (!searchQuery || !searchQuery.trim()) {
+    return;
+  }
+
+  const lowerCaseQuery = searchQuery.toLowerCase();
+  const filteredBooks = books.filter(book =>
+    book.title && book.title.toLowerCase().includes(lowerCaseQuery)
+  );
+
+  // Dispatch new search results
+  dispatch(setSearchResults(filteredBooks));
+};
 
 export default bookSlice.reducer;
