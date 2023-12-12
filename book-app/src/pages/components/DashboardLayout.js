@@ -6,7 +6,8 @@ import SearchIcon from '@mui/icons-material/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { styled, alpha } from '@mui/material/styles';
 import { Stack } from '@mui/material';
-import { MenuOpen } from '@mui/icons-material';
+import { Bookmark, MenuBook} from '@mui/icons-material';
+import { useRouter } from 'next/router';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -48,13 +49,21 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const DashboardLayout = ({ children }) => {
+    const router = useRouter();
+
+    const handleBackClick = () => {
+      router.push('/');
+    };
+
   return (
     <>
       <AppBar position="static" sx={{ bgcolor: '#830E1D' }}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="open drawer">
-            <MenuOpen />
-            {/* <img src="logo_path_here" alt="Logo" /> */}
+          <IconButton 
+            color="inherit" 
+            onClick={handleBackClick}
+          >
+            <MenuBook />
           </IconButton>
           <Stack sx={{ flexGrow: 1 }} />
           <Search>
@@ -67,7 +76,7 @@ const DashboardLayout = ({ children }) => {
             />
           </Search>
           <IconButton color="inherit">
-            <FavoriteBorderIcon />
+          <Bookmark />
           </IconButton>
           <IconButton color="inherit">
             {/* <ShoppingCartIcon /> */}
