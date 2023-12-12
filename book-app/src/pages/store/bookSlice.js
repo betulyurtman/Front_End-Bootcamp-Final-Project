@@ -29,7 +29,10 @@ const bookSlice = createSlice({
         if (index !== -1) {
           state.books[index] = { ...state.books[index], ...action.payload };
         }
-      },
+    },
+    addNewBook: (state, action) => {
+      state.books.push(action.payload);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -47,7 +50,7 @@ const bookSlice = createSlice({
   },
 });
 
-export const { setSearchResults, updateBookDetails } = bookSlice.actions;
+export const { setSearchResults, updateBookDetails, addNewBook } = bookSlice.actions;
 
 export const searchBooks = (searchQuery) => (dispatch, getState) => {
   const { books } = getState().books;

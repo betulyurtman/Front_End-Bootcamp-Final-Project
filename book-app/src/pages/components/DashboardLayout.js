@@ -3,6 +3,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import AddBoxIcon from '@mui/icons-material/AddBox';
 import { styled, alpha } from '@mui/material/styles';
 import { Stack } from '@mui/material';
 import { Bookmark, MenuBook} from '@mui/icons-material';
@@ -62,6 +63,11 @@ const DashboardLayout = ({ children }) => {
         router.push('/reading-list');
     };
 
+    // For add-book page.
+    const handleAddBookClick = () => {
+        router.push('/add-book');
+    };
+
   return (
     <>
       <AppBar position="static" sx={{ bgcolor: '#830E1D' }}>
@@ -85,6 +91,9 @@ const DashboardLayout = ({ children }) => {
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             />
           </Search>
+          <IconButton color="inherit" onClick={handleAddBookClick}>
+            <AddBoxIcon /> 
+          </IconButton>
           <IconButton color="inherit" onClick={handleReadingListClick}>
           <Bookmark />
           </IconButton>
