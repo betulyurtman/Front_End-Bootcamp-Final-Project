@@ -2,7 +2,9 @@ import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchBooks } from '../store/bookSlice';
-import { Typography, Card, CardMedia, CardContent, Grid, Box } from '@mui/material';
+import { Typography, Card, CardMedia, CardContent, Grid, Box, Button, IconButton } from '@mui/material';
+import Link from 'next/link';
+import { Edit } from '@mui/icons-material';
 
 const BookDetails = () => {
   const router = useRouter();
@@ -43,6 +45,13 @@ const BookDetails = () => {
               <Typography variant="body2" color="text.secondary" align="center">
                 Page Count: {book.pageCount}
               </Typography>
+              <Link href={`/edit-book/${book.id}`}>
+                <Button variant="contained" color="error">
+                  <IconButton color="inherit">
+                    <Edit />
+                  </IconButton>
+                </Button>
+              </Link>
             </CardContent>
         </Card>
       </Grid>
