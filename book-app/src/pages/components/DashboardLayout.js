@@ -57,6 +57,11 @@ const DashboardLayout = ({ children }) => {
         }
       };
 
+    // Activate reading list page button. 
+    const handleReadingListClick = () => {
+        router.push('/reading-list');
+    };
+
   return (
     <>
       <AppBar position="static" sx={{ bgcolor: '#830E1D' }}>
@@ -80,7 +85,7 @@ const DashboardLayout = ({ children }) => {
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             />
           </Search>
-          <IconButton color="inherit">
+          <IconButton color="inherit" onClick={handleReadingListClick}>
           <Bookmark />
           </IconButton>
           <IconButton color="inherit">
