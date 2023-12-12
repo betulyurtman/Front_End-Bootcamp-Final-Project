@@ -6,11 +6,17 @@ import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { Button, Container, Stack, TextField, Typography } from '@mui/material';
 
+// We can add validations using Yup.
+const currentYear = new Date().getFullYear(); // Get the current year.
+
 const BookSchema = Yup.object().shape({
-  title: Yup.string().required('Title is required'),
-  author: Yup.string().required('Author is required'),
-  pageCount: Yup.number().required('Page count is required').positive().integer(),
-});
+    title: Yup.string().required('Title is required'),
+    publishedDate: Yup.number()
+      .integer('Published year must be an integer')
+      .max(currentYear, 'Published year cannot be bigger than current year.'),
+    pageCount: Yup.number()
+      .integer('Page count must be an integer')
+  });
 
 const EditBook = () => {
   const router = useRouter();
@@ -58,6 +64,7 @@ const EditBook = () => {
             margin="normal"
             error={formik.touched.title && Boolean(formik.errors.title)}
             helperText={formik.touched.title && formik.errors.title}
+            onBlur={formik.handleBlur}
           />
           <TextField
             fullWidth
@@ -69,6 +76,7 @@ const EditBook = () => {
             margin="normal"
             error={formik.touched.author && Boolean(formik.errors.author)}
             helperText={formik.touched.author && formik.errors.author}
+            onBlur={formik.handleBlur}
           />
           <TextField
             fullWidth
@@ -81,6 +89,7 @@ const EditBook = () => {
             margin="normal"
             error={formik.touched.pageCount && Boolean(formik.errors.pageCount)}
             helperText={formik.touched.pageCount && formik.errors.pageCount}
+            onBlur={formik.handleBlur}
           />
           <Button color="error" variant="contained" fullWidth type="submit">
             Update Book
