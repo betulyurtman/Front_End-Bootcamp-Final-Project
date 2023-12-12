@@ -1,0 +1,94 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { updateBookDetails } from '../store/bookSlice';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { Button, Container, Stack, TextField, Typography } from '@mui/material';
+
+const BookSchema = Yup.object().shape({
+  title: Yup.string().required('Title is required'),
+  author: Yup.string().required('Author is required'),
+  pageCount: Yup.number().required('Page count is required').positive().integer(),
+});
+
+const EditBook = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const dispatch = useDispatch();
+  const book = useSelector(state => state.books.books.find(b => b.id === id));
+
+  useEffect(() => {
+    if (book) {
+      formik.setValues({
+        title: book.title || '',
+        author: book.author || '',
+        pageCount: book.pageCount || '',
+      });
+    }
+  }, [book]);
+
+  const formik = useFormik({
+    initialValues: {
+      title: '',
+      author: '',
+      pageCount: '',
+    },
+    validationSchema: BookSchema,
+    onSubmit: (values) => {
+      dispatch(updateBookDetails({ ...values, id }));
+      router.push(`/book/${id}`);
+    },
+  });
+
+  return (
+    <Container>
+      <Stack spacing={2}>
+        <Typography variant="h4" component="h1">
+          Edit Book
+        </Typography>
+        <form onSubmit={formik.handleSubmit}>
+          <TextField
+            fullWidth
+            id="title"
+            name="title"
+            label="Title"
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            margin="normal"
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
+          />
+          <TextField
+            fullWidth
+            id="author"
+            name="author"
+            label="Author"
+            value={formik.values.author}
+            onChange={formik.handleChange}
+            margin="normal"
+            error={formik.touched.author && Boolean(formik.errors.author)}
+            helperText={formik.touched.author && formik.errors.author}
+          />
+          <TextField
+            fullWidth
+            id="pageCount"
+            name="pageCount"
+            label="Page Count"
+            type="number"
+            value={formik.values.pageCount}
+            onChange={formik.handleChange}
+            margin="normal"
+            error={formik.touched.pageCount && Boolean(formik.errors.pageCount)}
+            helperText={formik.touched.pageCount && formik.errors.pageCount}
+          />
+          <Button color="error" variant="contained" fullWidth type="submit">
+            Update Book
+          </Button>
+        </form>
+      </Stack>
+    </Container>
+  );
+};
+
+export default EditBook;

@@ -24,6 +24,12 @@ const bookSlice = createSlice({
     setSearchResults: (state, action) => {
       state.searchResults = action.payload;
     },
+    updateBookDetails: (state, action) => {
+        const index = state.books.findIndex(book => book.id === action.payload.id);
+        if (index !== -1) {
+          state.books[index] = { ...state.books[index], ...action.payload };
+        }
+      },
   },
   extraReducers: (builder) => {
     builder
@@ -41,7 +47,7 @@ const bookSlice = createSlice({
   },
 });
 
-export const { setSearchResults } = bookSlice.actions;
+export const { setSearchResults, updateBookDetails } = bookSlice.actions;
 
 export const searchBooks = (searchQuery) => (dispatch, getState) => {
   const { books } = getState().books;
