@@ -20,6 +20,7 @@ const ReadingList = () => {
     <Typography variant="h3" align="left" gutterBottom>
       Reading List
     </Typography>
+    {readingList.length > 0 ? (
     <Grid container spacing={2}>
       {readingList.map((book, index) => (
         <Grid item xs={12} sm={6} md={4} key={book.id || `book-${index}`}>
@@ -53,6 +54,11 @@ const ReadingList = () => {
         </Grid>
       ))}
     </Grid>
+    ) : (
+        <Typography variant="h6" align="center" color="text.secondary">
+          Your reading list is empty.
+        </Typography>
+      )}
     </>
   );
 };
