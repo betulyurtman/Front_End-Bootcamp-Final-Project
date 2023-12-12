@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  readingList: JSON.parse(localStorage.getItem('readingList')) || [],
+    readingList: [],
 };
 
 export const readingListSlice = createSlice({
@@ -14,6 +14,8 @@ export const readingListSlice = createSlice({
       );
       if (existingIndex === -1) {
         state.readingList.push(action.payload);
+      } else {
+        state.readingList.splice(existingIndex, 1);
       }
     },
     removeFromReadingList: (state, action) => {
@@ -24,5 +26,5 @@ export const readingListSlice = createSlice({
   },
 });
 
-export const { addToReadingList, removeFromReadingList } = readingListSlice.actions;
+export const { addToReadingList } = readingListSlice.actions;
 export default readingListSlice.reducer;

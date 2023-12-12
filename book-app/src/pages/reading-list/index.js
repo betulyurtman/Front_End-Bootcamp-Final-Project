@@ -1,35 +1,25 @@
-import React, { useEffect, useState } from 'react';
 import { Card, Typography, Grid, CardMedia, CardContent, Box, IconButton } from '@mui/material';
 import { Bookmark, BookmarkBorder } from '@mui/icons-material';
+import { useSelector, useDispatch } from 'react-redux';
+import { addToReadingList } from '../store/readingListSlice';
 
 const ReadingList = () => {
-  const [readingList, setReadingList] = useState([]);
+    const dispatch = useDispatch();
+    const readingList = useSelector((state) => state.readingList.readingList);
 
-  useEffect(() => {
-    const storedReadingList = JSON.parse(localStorage.getItem('readingList')) || [];
-    setReadingList(storedReadingList);
-  }, []);
+    const handleToggleReadingList = (book) => {
+        dispatch(addToReadingList(book));
+      };
 
   const isBookInReadingList = (bookId) => {
-    const readingList = JSON.parse(localStorage.getItem('readingList')) || [];
     return readingList.some((b) => b.id === bookId);
   };
 
-  const handleToggleReadingList = (book) => {
-    let updatedReadingList = [...readingList];
-    const bookIndex = updatedReadingList.findIndex((b) => b.id === book.id);
-
-    if (bookIndex !== -1) {
-      updatedReadingList = updatedReadingList.filter((b) => b.id !== book.id);
-    } else {
-      updatedReadingList.push(book);
-    }
-
-    setReadingList(updatedReadingList);
-    localStorage.setItem('readingList', JSON.stringify(updatedReadingList));
-  };
-
   return (
+    <>
+    <Typography variant="h3" align="left" gutterBottom>
+      Reading List
+    </Typography>
     <Grid container spacing={2}>
       {readingList.map((book, index) => (
         <Grid item xs={12} sm={6} md={4} key={book.id || `book-${index}`}>
@@ -63,6 +53,7 @@ const ReadingList = () => {
         </Grid>
       ))}
     </Grid>
+    </>
   );
 };
 

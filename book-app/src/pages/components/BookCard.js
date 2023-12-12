@@ -1,64 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Card, CardMedia, CardContent, Typography, Button, IconButton, Box } from '@mui/material';
 import Link from 'next/link';
 import { Bookmark, BookmarkBorder } from '@mui/icons-material';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToReadingList } from '@/pages/store/readingListSlice';
 
-const BookCard = ({ book, isAlreadyInReadingList }) => {
-  const [isInReadingList, setIsInReadingList] = useState(isAlreadyInReadingList);
+const BookCard = ({ book }) => {
+    const dispatch = useDispatch();
+    const readingList = useSelector((state) => state.readingList.readingList);
 
-  useEffect(() => {
-    const readingList = JSON.parse(localStorage.getItem('readingList')) || [];
-    setIsInReadingList(readingList.some((b) => b.id === book.id));
-  }, [book.id]);
+    useEffect(() => {
+        const storedReadingList = JSON.parse(localStorage.getItem('readingList')) || [];
+        dispatch(addToReadingList(storedReadingList));
+    }, [dispatch]);
 
-  const handleAddToReadingList = () => {
-    let readingList = JSON.parse(localStorage.getItem('readingList')) || [];
-    const index = readingList.findIndex((b) => b.id === book.id);
+    useEffect(() => {
+        localStorage.setItem('readingList', JSON.stringify(readingList));
+    }, [readingList]);
 
-    if (index !== -1) {
-        readingList = readingList.filter((b) => b.id !== book.id);
-    } else {
-        readingList.push(book);
-    }
-    localStorage.setItem('readingList', JSON.stringify(readingList));
-    setIsInReadingList(!isInReadingList);
-  };
+    const isInReadingList = readingList.some((b) => b.id === book.id);
 
-  return (
-    <Card sx={{ position: 'relative', maxWidth: 345, '&:hover': { boxShadow: 6 }, height: '100%' }}>
-      <Box sx={{ position: 'absolute', top: 0, right: 0, zIndex: 1 }}>
-        <IconButton
-          color="inherit"
-          onClick={handleAddToReadingList}
-        >
-          {isInReadingList ? <Bookmark /> : <BookmarkBorder />}
-        </IconButton>
-      </Box>
-      <CardMedia
-        component="img"
-        height="250"
-        image={book.thumbnail || 'https://images.pexels.com/photos/3358707/pexels-photo-3358707.png'}
-        alt={book.title}
-        sx={{ height: 150, objectFit: 'contain' }}
-      />
-      <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
-          {book.title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Author: {book.author}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Page Count: {book.pageCount}
-        </Typography>
-        <Link href={`/book/${book.id}`}>
-          <Button variant="outlined" color="error">
-            Details
-          </Button>
-        </Link>
-      </CardContent>
-    </Card>
-  );
+    const handleToggleReadingList = () => {
+        dispatch(addToReadingList(book));
+    };
+
+    return (
+      <Card sx={{ position: 'relative', maxWidth: 345, '&:hover': { boxShadow: 6 }, height: '100%' }}>
+        <Box sx={{ position: 'absolute', top: 0, right: 0, zIndex: 1 }}>
+          <IconButton color="inherit" onClick={handleToggleReadingList}>
+            {isInReadingList ? <Bookmark /> : <BookmarkBorder />}
+          </IconButton>
+        </Box>
+        <CardMedia
+          component="img"
+          height="250"
+          image={book.thumbnail || 'https://images.pexels.com/photos/3358707/pexels-photo-3358707.png'}
+          alt={book.title}
+          sx={{ height: 150, objectFit: 'contain' }}
+        />
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {book.title}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Author: {book.author}
+          </Typography>
+          <Typography variant="body2" color="text.secondary">
+            Page Count: {book.pageCount}
+          </Typography>
+          <Link href={`/book/${book.id}`}>
+            <Button variant="outlined" color="error">
+              Details
+            </Button>
+          </Link>
+        </CardContent>
+      </Card>
+    );
 };
 
 export default BookCard;
