@@ -32,7 +32,7 @@ const EditBook = () => {
         pageCount: book.pageCount || '',
       });
     }
-  }, [book]);
+  }, [book, formik]);
 
   const formik = useFormik({
     initialValues: {
