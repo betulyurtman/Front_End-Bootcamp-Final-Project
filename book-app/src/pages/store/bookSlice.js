@@ -8,6 +8,7 @@ const initialState = {
   searchResults: [],
   loadingSearch: false,
   updatingBook: false,
+  addingBook: false,
 };
 
 export const fetchBooks = createAsyncThunk(
@@ -27,6 +28,15 @@ export const updateBookDetails = createAsyncThunk(
   }
 );
 
+export const addNewBook = createAsyncThunk(
+  'books/addNewBook',
+  async (bookDetails, { dispatch }) => {
+    const response = await axios.post('https://6578bfbbf08799dc8045fadc.mockapi.io/api/books', bookDetails);
+    dispatch(fetchBooks()); // Refetch books to update the state with the latest data
+    return response.data;
+  }
+);
+
 const bookSlice = createSlice({
   name: 'book',
   initialState,
@@ -40,7 +50,7 @@ const bookSlice = createSlice({
           state.books[index] = { ...state.books[index], ...action.payload };
         }
     },
-    addNewBook: (state, action) => {
+    addNewBookReducer: (state, action) => {
       state.books.push(action.payload);
     },
   },
@@ -71,11 +81,26 @@ const bookSlice = createSlice({
         state.error = action.error.message;
         // Reset the updatingBook flag
         state.updatingBook = false;
+      })
+      .addCase(addNewBook.pending, (state) => {
+        // Optionally, set a flag to indicate that a book addition operation is in progress
+        state.addingBook = true;
+      })
+      .addCase(addNewBook.fulfilled, (state) => {
+        // The book list will be updated by the fetchBooks() dispatched earlier
+        // Reset the addingBook flag
+        state.addingBook = false;
+      })
+      .addCase(addNewBook.rejected, (state, action) => {
+        // Handle errors
+        state.error = action.error.message;
+        // Reset the addingBook flag
+        state.addingBook = false;
       });
   },
 });
 
-export const { setSearchResults, updateBookDetailsReducer, addNewBook } = bookSlice.actions;
+export const { setSearchResults, updateBookDetailsReducer, addNewBookReducer } = bookSlice.actions;
 
 export const searchBooks = (searchQuery) => (dispatch, getState) => {
   const { books } = getState().books;
