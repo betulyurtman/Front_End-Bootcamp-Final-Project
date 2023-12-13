@@ -91,6 +91,19 @@ const EditBook = () => {
             helperText={formik.touched.pageCount && formik.errors.pageCount}
             onBlur={formik.handleBlur}
           />
+          <TextField
+            fullWidth
+            id="thumbnail"
+            name="thumbnail"
+            label="Thumbnail URL"
+            type="url"
+            value={formik.values.thumbnail}
+            onChange={formik.handleChange}
+            margin="normal"
+            error={formik.touched.thumbnail && Boolean(formik.errors.thumbnail)}
+            helperText={formik.touched.thumbnail && formik.errors.thumbnail}
+            onBlur={formik.handleBlur}
+          />
           <Button color="error" variant="contained" fullWidth type="submit">
             Update Book
           </Button>
