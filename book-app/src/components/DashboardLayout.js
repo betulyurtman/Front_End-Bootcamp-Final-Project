@@ -5,7 +5,7 @@ import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import { styled, alpha } from '@mui/material/styles';
-import { Stack } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 import { Bookmark, MenuBook} from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
@@ -78,6 +78,13 @@ const DashboardLayout = ({ children }) => {
           >
             <MenuBook />
           </IconButton>
+          <Typography 
+              variant="h4" 
+              component="div" 
+              sx={{ flexGrow: 1, marginLeft: 50 }}
+          >
+              Books for Book Lovers
+          </Typography>
           <Stack sx={{ flexGrow: 1 }} />
           <Search>
             <IconButton onClick={handleSearch} color="inherit">   

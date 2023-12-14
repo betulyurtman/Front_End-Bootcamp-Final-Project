@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBooks } from '../store/bookSlice';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from '@mui/material';
 import BookCard from '../components/BookCard';
 
 const BookList = () => {
@@ -18,13 +18,21 @@ const BookList = () => {
   if (error) return <p>Error occurred: {error}</p>;
 
   return (
-    <Grid container spacing={2}>
-      {displayBooks.map((book, index) => (
-        <Grid item xs={12} sm={6} md={4} key={book.id || `book-${index}`}>
-          <BookCard book={book} />
-        </Grid>
-      ))}
-    </Grid>
+    <div>
+      <Typography variant="h3" component="h1" gutterBottom>
+        Self Improvement Books
+      </Typography>
+      <Typography variant="h6">
+        Total Book Count: {displayBooks.length}
+      </Typography>
+      <Grid container spacing={2}>
+        {displayBooks.map((book, index) => (
+          <Grid item xs={12} sm={6} md={4} key={book.id || `book-${index}`}>
+            <BookCard book={book} />
+          </Grid>
+        ))}
+      </Grid>
+    </div>
   );
 };
 
