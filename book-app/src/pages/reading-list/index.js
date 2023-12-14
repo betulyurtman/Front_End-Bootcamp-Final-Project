@@ -1,7 +1,7 @@
 import { Card, Typography, Grid, CardMedia, CardContent, Box, IconButton } from '@mui/material';
 import { Bookmark, BookmarkBorder } from '@mui/icons-material';
 import { useSelector, useDispatch } from 'react-redux';
-import { addToReadingList } from '../store/readingListSlice';
+import { addToReadingList } from '../../store/readingListSlice';
 
 const ReadingList = () => {
     const dispatch = useDispatch();

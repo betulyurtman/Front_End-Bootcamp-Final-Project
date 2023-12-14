@@ -10,7 +10,7 @@ import { Bookmark, MenuBook} from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { searchBooks, setSearchResults } from '@/pages/store/bookSlice';
+import { searchBooks, setSearchResults } from '@/store/bookSlice';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',

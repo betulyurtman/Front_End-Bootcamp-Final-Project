@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchBooks } from '../store/bookSlice';
+import { fetchBooks } from '../../store/bookSlice';
 import { Typography, Card, CardMedia, CardContent, Grid, Box, Button, IconButton } from '@mui/material';
 import Link from 'next/link';
 import { Edit } from '@mui/icons-material';

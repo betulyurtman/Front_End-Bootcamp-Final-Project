@@ -1,7 +1,7 @@
 import React from 'react';
 import { TextField, Button, Container, Typography } from '@mui/material';
 import { useDispatch } from 'react-redux';
-import { addNewBook } from '../store/bookSlice';
+import { addNewBook } from '../../store/bookSlice';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 

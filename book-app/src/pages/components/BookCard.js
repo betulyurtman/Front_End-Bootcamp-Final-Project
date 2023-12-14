@@ -3,27 +3,33 @@ import { Card, CardMedia, CardContent, Typography, Button, IconButton, Box } fro
 import Link from 'next/link';
 import { Bookmark, BookmarkBorder } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToReadingList } from '@/pages/store/readingListSlice';
+import { addToReadingList } from '@/store/readingListSlice';
 
 const BookCard = ({ book }) => {
     const dispatch = useDispatch();
     const readingList = useSelector((state) => state.readingList.readingList);
 
+    
     useEffect(() => {
-        const storedReadingList = JSON.parse(localStorage.getItem('readingList')) || [];
-        dispatch(addToReadingList(storedReadingList));
+      const storedReadingList = JSON.parse(localStorage.getItem('readingList')) || [];
+      dispatch(addToReadingList(storedReadingList));
     }, [dispatch]);
-
+    
     useEffect(() => {
-        localStorage.setItem('readingList', JSON.stringify(readingList));
+      localStorage.setItem('readingList', JSON.stringify(readingList));
     }, [readingList]);
-
+    
     const isInReadingList = readingList.some((b) => b.id === book.id);
-
+    
     const handleToggleReadingList = () => {
-        dispatch(addToReadingList(book));
+      dispatch(addToReadingList(book));
     };
-
+    
+    if (!book) {
+      // Return a placeholder, loading state, or null
+      return <div>Loading...</div>;
+    };
+    
     return (
       <Card sx={{ position: 'relative', maxWidth: 345, '&:hover': { boxShadow: 6 }, height: '100%' }}>
         <Box sx={{ position: 'absolute', top: 0, right: 0, zIndex: 1 }}>

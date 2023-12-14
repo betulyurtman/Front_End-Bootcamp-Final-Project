@@ -1,5 +1,5 @@
 import { Provider } from "react-redux"
-import store from "./store/store"
+import store from "../store/store"
 import DashboardLayout from "./components/DashboardLayout"
 
 export default function App({ Component, pageProps }) {

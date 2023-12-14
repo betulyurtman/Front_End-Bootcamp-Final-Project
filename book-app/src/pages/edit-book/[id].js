@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { updateBookDetails } from '../store/bookSlice';
+import { updateBookDetails } from '../../store/bookSlice';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
@@ -24,23 +24,27 @@ const EditBook = () => {
   const dispatch = useDispatch();
   const book = useSelector(state => state.books.books.find(b => b.id === id));
 
-  useEffect(() => {
+  const getInitialValues = () => {
     if (book) {
-      formik.setValues({
+      return {
         title: book.title || '',
         author: book.author || '',
         pageCount: book.pageCount || '',
-      });
+        thumbnail: book.thumbnail || '',
+      };
     }
-  }, [book, formik]);
-
-  const formik = useFormik({
-    initialValues: {
+    return {
       title: '',
       author: '',
       pageCount: '',
-    },
+      thumbnail: '',
+    };
+  };
+
+  const formik = useFormik({
+    initialValues: getInitialValues(),
     validationSchema: BookSchema,
+    enableReinitialize: true, // This reinitializes formik when initialValues changes
     onSubmit: (values) => {
       dispatch(updateBookDetails({ ...values, id }));
       router.push(`/book/${id}`);
