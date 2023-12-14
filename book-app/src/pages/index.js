@@ -1,16 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchBooks } from '../store/bookSlice';
-import { Box, Grid, Typography } from '@mui/material';
+import { fetchBooks, setSearchResults, searchBooks } from '../store/bookSlice';
 import BookCard from '../components/BookCard';
 import Slider from 'react-slick';
-import { Pagination } from '@mui/material';
+import { Box, Grid, Typography, Pagination } from '@mui/material';
+import InputBase from '@mui/material/InputBase';
+import IconButton from '@mui/material/IconButton';
+import { styled, alpha } from '@mui/material/styles';
+import SearchIcon from '@mui/icons-material/Search';
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginRight: theme.spacing(2),
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(3),
+    width: 'auto',
+  },
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('md')]: {
+      width: '20ch',
+    },
+  },
+}));
 
 const BookList = () => {
   const dispatch = useDispatch();
   const { books, loadingBooks, error, searchResults, loadingSearch } = useSelector((state) => state.books);
   const [currentPage, setCurrentPage] = useState(1);
   const booksPerPage = 15; 
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    if (searchQuery.trim() !== '') {
+      dispatch(searchBooks(searchQuery));
+    } else {
+        dispatch(setSearchResults([]));
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchBooks());
@@ -90,7 +131,18 @@ const BookList = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           Self Improvement Books
         </Typography>
-        
+        <Search>
+            <IconButton onClick={handleSearch} color="inherit">   
+              <SearchIcon />
+              </IconButton>
+            <StyledInputBase
+              placeholder="Search…"
+              inputProps={{ 'aria-label': 'search' }}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
+            />
+          </Search>
         <Pagination count={pageCount} page={currentPage} onChange={handlePageChange} />
       </Box>
       <Grid container spacing={6}>
