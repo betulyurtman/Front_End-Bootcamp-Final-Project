@@ -21,10 +21,14 @@ const ReadingList = () => {
       Reading List
     </Typography>
     {readingList.length > 0 ? (
-    <Grid container spacing={2}>
-      {readingList.map((book, index) => (
-        <Grid item xs={12} sm={6} md={4} key={book.id || `book-${index}`}>
-          <Card sx={{ position: 'relative', maxWidth: 345, '&:hover': { boxShadow: 6 }, height: '100%' }}>
+      <>
+      <Typography variant="h6" align="left" gutterBottom>
+          You have {readingList.length} books in your reading list.
+      </Typography>
+      <Grid container spacing={2}>
+        {readingList.map((book, index) => (
+          <Grid item xs={12} sm={6} md={4} key={book.id || `book-${index}`}>
+            <Card sx={{ position: 'relative', maxWidth: 345, '&:hover': { boxShadow: 6 }, height: '100%' }}>
             <Box sx={{ position: 'absolute', top: 0, right: 0, zIndex: 1 }}>
               <IconButton
                 color="inherit"
@@ -54,6 +58,7 @@ const ReadingList = () => {
         </Grid>
       ))}
     </Grid>
+    </>
     ) : (
         <Typography variant="h6" align="center" color="text.secondary">
           Your reading list is empty.
