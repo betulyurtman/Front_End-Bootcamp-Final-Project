@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBooks } from '../store/bookSlice';
 import { Grid } from '@mui/material';
-import BookCard from './components/BookCard';
+import BookCard from '../components/BookCard';
 
 const BookList = () => {
   const dispatch = useDispatch();
