@@ -42,7 +42,7 @@ const BookCard = ({ book }) => {
           height="250"
           image={book.thumbnail || 'https://images.pexels.com/photos/3358707/pexels-photo-3358707.png'}
           alt={book.title}
-          sx={{ height: 150, objectFit: 'contain' }}
+          sx={{ height: 250, objectFit: 'contain' }}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -54,11 +54,14 @@ const BookCard = ({ book }) => {
           <Typography variant="body2" color="text.secondary">
             Page Count: {book.pageCount}
           </Typography>
+          <Box sx={{ marginY: 4 }}></Box> {/* Adding Space */}
+          <Box sx={{ position: 'absolute', bottom: 16, right: 16 }}>
           <Link href={`/book/${book.id}`}>
             <Button variant="outlined" color="error">
               Details
             </Button>
           </Link>
+          </Box>
         </CardContent>
       </Card>
     );
