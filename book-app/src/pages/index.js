@@ -159,9 +159,16 @@ const BookList = () => {
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             />
           </Search>
-          {/* Pagination part. */}
+      </Box>
+
+      <Box sx={{ marginY: 2 }}></Box> {/* Adding Space */}
+
+      {/* Pagination part. */}
+      <Box sx={{ display: 'flex', justifyContent: 'center' }}>
         <Pagination count={pageCount} page={currentPage} onChange={handlePageChange} />
       </Box>
+      
+      <Box sx={{ marginY: 4 }}></Box> {/* Adding Space */}
 
       {/* Displaying books according to current page. */}
       <Grid container spacing={6}>
@@ -171,7 +178,7 @@ const BookList = () => {
           </Grid>
         ))}
       </Grid>
-
+      
       {/* Showing total book count. */}
       <Typography variant="h8" sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
         Total Book Count: {displayBooks.length}
