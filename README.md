@@ -12,6 +12,20 @@ Projemi hazırlarken Next.js, Redux Toolkit ve tasarım için MUI kullandım.
 
 Projem için gerekli olan veriyi MockAPI ile oluşturdum.
 
+
+Uygulamanın kullanımı:
+
+![1](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/08a89910-e945-42ed-a2c9-33d416fc9056)
+
+![2](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/33f85e06-1801-4c5d-a812-47669dc40da3)
+
+![3](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/07e8f96d-f142-4266-8bd3-3c1ca5fe5a81)
+
+![4](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/580305b6-0d38-4933-b7d1-915809088387)
+
+![5](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/fbfceae7-588c-4c81-a8af-ab461cdc6898)
+
+
 Proje Dosyaları:
 
 Projemin "src" klasörü içerisinde "components", "pages" ve "store" şeklinde 3 klasör bulunmaktadır. 
@@ -42,19 +56,5 @@ bookSlice: Bu bölümde, MockAPI kullanarak oluşturduğum verileri çekme, düz
 readingListSlice: Bu bölümde, reading list için gerekli olan listeye ekleme ve listeden çıkarma için reducer ve action'ları hazırladım.
 
 store: Bu bölümde yer alan "store", projenin Redux store'unu tanımlıyor ve yönetiyor, ayrıca reducer'ları, actions'ları ve async işlemleri içeriyor ve bu sayede projedeki global durumu (state) kontrol ediyor.
-
-Uygulamanın kullanımı:
-
-![1](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/08a89910-e945-42ed-a2c9-33d416fc9056)
-
-![2](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/33f85e06-1801-4c5d-a812-47669dc40da3)
-
-![3](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/07e8f96d-f142-4266-8bd3-3c1ca5fe5a81)
-
-![4](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/580305b6-0d38-4933-b7d1-915809088387)
-
-![5](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/fbfceae7-588c-4c81-a8af-ab461cdc6898)
-
-
 
 
