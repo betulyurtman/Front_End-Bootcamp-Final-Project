@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { addNewBook } from '../../store/bookSlice';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { useRouter } from 'next/router';
 
 // Defines a Yup validation schema using the Yup.object function.
 // Specifies validation rules for the title, author, pageCount, and thumbnail fields.
@@ -19,6 +20,7 @@ const validationSchema = Yup.object({
 // Uses Formik's useFormik hook to initialize form values, validation, and submission handling.
 const NewBook = () => {
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const formik = useFormik({
     initialValues: {
@@ -30,7 +32,7 @@ const NewBook = () => {
     validationSchema,
     onSubmit: (values) => {
       dispatch(addNewBook(values));
-      formik.resetForm();
+      router.push(`/`);
     },
   });
 
