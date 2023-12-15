@@ -1,6 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'; // Functions for creating asynchronous thunks and slices.
+import axios from 'axios'; // Library for making HTTP requests.
 
+// Initial state of the Redux slice
 const initialState = {
   books: [],
   loadingBooks: false,
@@ -11,6 +12,8 @@ const initialState = {
   addingBook: false,
 };
 
+// Async thunk for fetching books
+// Defines an asynchronous thunk fetchBooks using createAsyncThunk. Fetches books from the mock API I have created and returns the data.
 export const fetchBooks = createAsyncThunk(
     'books/fetchBooks',
     async () => {
@@ -19,6 +22,8 @@ export const fetchBooks = createAsyncThunk(
     }
   );  
 
+// Async thunk for updating book details
+// Defines an asynchronous thunk updateBookDetails using createAsyncThunk. Updates book details on a mock API, then dispatches fetchBooks to update the state.
 export const updateBookDetails = createAsyncThunk(
   'books/updateBookDetails',
   async (bookDetails, { dispatch }) => {
@@ -28,6 +33,8 @@ export const updateBookDetails = createAsyncThunk(
   }
 );
 
+// Async thunk for adding a new book
+// Defines an asynchronous thunk addNewBook using createAsyncThunk. Adds a new book to the mock API, then dispatches fetchBooks to update the state.
 export const addNewBook = createAsyncThunk(
   'books/addNewBook',
   async (bookDetails, { dispatch }) => {
@@ -37,6 +44,7 @@ export const addNewBook = createAsyncThunk(
   }
 );
 
+// Redux slice creation using createSlice
 const bookSlice = createSlice({
   name: 'book',
   initialState,
@@ -54,6 +62,8 @@ const bookSlice = createSlice({
       state.books.push(action.payload);
     },
   },
+  // Uses extraReducers to handle actions dispatched by asynchronous thunks.
+  // Handles pending, fulfilled, and rejected actions for fetchBooks, updateBookDetails, and addNewBook.
   extraReducers: (builder) => {
     builder
       .addCase(fetchBooks.pending, (state) => {
@@ -103,15 +113,20 @@ const bookSlice = createSlice({
 export const { setSearchResults, updateBookDetailsReducer, addNewBookReducer } = bookSlice.actions;
 
 export const searchBooks = (searchQuery) => (dispatch, getState) => {
+
+  // const { books } = getState().books; destructures the books array from the current state of the Redux store.
   const { books } = getState().books;
 
   // Clear previous search results
   dispatch(setSearchResults([]));
 
+  // Checks if the searchQuery is either falsy or contains only whitespace after trimming. If true, the function returns early, skipping the search logic.
   if (!searchQuery || !searchQuery.trim()) {
     return;
   }
 
+  // Converts the searchQuery to lowercase for case-insensitive matching.
+  // Uses the filter method on the books array to create a new array (filteredBooks) containing only the books whose titles include the lowercased search query.
   const lowerCaseQuery = searchQuery.toLowerCase();
   const filteredBooks = books.filter(book =>
     book.title && book.title.toLowerCase().includes(lowerCaseQuery)

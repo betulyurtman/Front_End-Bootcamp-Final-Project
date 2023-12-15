@@ -9,6 +9,7 @@ import IconButton from '@mui/material/IconButton';
 import { styled, alpha } from '@mui/material/styles';
 import SearchIcon from '@mui/icons-material/Search';
 
+// Styles for the search bar.
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   borderRadius: theme.shape.borderRadius,
@@ -25,6 +26,7 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
+// Styles for the input base.
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
   '& .MuiInputBase-input': {
@@ -40,11 +42,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const BookList = () => {
   const dispatch = useDispatch();
-  const { books, loadingBooks, error, searchResults, loadingSearch } = useSelector((state) => state.books);
-  const [currentPage, setCurrentPage] = useState(1);
-  const booksPerPage = 15; 
+  const booksPerPage = 15; // For pagination.
+  const [currentPage, setCurrentPage] = useState(1); // For pagination.
   const [searchQuery, setSearchQuery] = useState('');
+  const { books, loadingBooks, error, searchResults, loadingSearch } = useSelector((state) => state.books);
 
+  // Creating handleSearch function to dispatch a search action or clear search results based on the search query.
   const handleSearch = () => {
     if (searchQuery.trim() !== '') {
       dispatch(searchBooks(searchQuery));
@@ -53,16 +56,20 @@ const BookList = () => {
     }
   };
 
+  // Uses the useEffect hook to dispatch the fetchBooks action when the component mounts.
   useEffect(() => {
     dispatch(fetchBooks());
   }, [dispatch]);
 
+  // Determines which set of books to display based on whether there are search results.
   const displayBooks = searchResults.length > 0 ? searchResults : books;
 
+  // Pagination.
   const indexOfLastBook = currentPage * booksPerPage;
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
   const currentBooks = displayBooks.slice(indexOfFirstBook, indexOfLastBook);
 
+  // Creating handlePageChange function to update the currentPage state when the user changes the page.
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
@@ -73,6 +80,7 @@ const BookList = () => {
   if (loadingBooks || loadingSearch) return <p>Loading...</p>;
   if (error) return <p>Error occurred: {error}</p>;
 
+  // Settings for slider.
   const settings = {
     dots: true,
     infinite: true,
@@ -86,8 +94,11 @@ const BookList = () => {
 
   return (
     <div>
+      {/* This box is for slider. */}
       <Box sx={{ width: '100%', overflow: 'hidden', backgroundColor: '#FAEED1' }}>
         <Slider {...settings}>
+          
+          {/* Images to show on the slider. */}
           <Box sx={{ padding: 2 }}>
             <img
               src="https://images.pexels.com/photos/159866/books-book-pages-read-literature-159866.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
@@ -127,10 +138,14 @@ const BookList = () => {
       </Box>
       
       <Box sx={{ marginY: 4 }}></Box> {/* Adding Space */}
+
+      {/* Title for the books. */}
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 2 }}>
         <Typography variant="h4" component="h1" gutterBottom>
           Self Improvement Books
         </Typography>
+
+        {/* Search part. */}
         <Search>
             <IconButton onClick={handleSearch} color="inherit">   
               <SearchIcon />
@@ -143,8 +158,11 @@ const BookList = () => {
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             />
           </Search>
+          {/* Pagination part. */}
         <Pagination count={pageCount} page={currentPage} onChange={handlePageChange} />
       </Box>
+
+      {/* Displaying books according to current page. */}
       <Grid container spacing={6}>
         {currentBooks.map((book, index) => (
           <Grid item xs={12} sm={6} md={4} key={book.id || `book-${index}`}>
@@ -152,6 +170,8 @@ const BookList = () => {
           </Grid>
         ))}
       </Grid>
+
+      {/* Showing total book count. */}
       <Typography variant="h8" sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
         Total Book Count: {displayBooks.length}
       </Typography>

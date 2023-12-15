@@ -7,25 +7,31 @@ const ReadingList = () => {
     const dispatch = useDispatch();
     const readingList = useSelector((state) => state.readingList.readingList);
 
+    // For bookmark(adding to or removing from the reading list) button.
     const handleToggleReadingList = (book) => {
         dispatch(addToReadingList(book));
       };
 
-  const isBookInReadingList = (bookId) => {
-    return readingList.some((b) => b.id === bookId);
-  };
+    // Creating isBookInReadingList function that checks if a book with a given bookId is in the reading list. It returns a boolean.
+    const isBookInReadingList = (bookId) => {
+      return readingList.some((b) => b.id === bookId);
+    };
 
   return (
     <>
+    {/* Title for the page. */}
     <Typography variant="h3" align="left" gutterBottom>
       Reading List
     </Typography>
+    {/* Checking the length to show messages to the user. */}
     {readingList.length > 0 ? (
       <>
       <Typography variant="h6" align="left" gutterBottom>
+          {/* Showing how many books is on the list. */}
           You have {readingList.length} books in your reading list.
       </Typography>
       <Grid container spacing={2}>
+        {/* Displaying the books. */}
         {readingList.map((book, index) => (
           <Grid item xs={12} sm={6} md={4} key={book.id || `book-${index}`}>
             <Card sx={{ position: 'relative', maxWidth: 345, '&:hover': { boxShadow: 6 }, height: '100%' }}>
@@ -60,6 +66,7 @@ const ReadingList = () => {
     </Grid>
     </>
     ) : (
+        // Showing a message if the list is empty.
         <Typography variant="h6" align="center" color="text.secondary">
           Your reading list is empty.
         </Typography>
