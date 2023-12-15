@@ -43,3 +43,5 @@ readingListSlice: Bu bölümde, reading list için gerekli olan listeye ekleme v
 
 store: Bu bölümde yer alan "store", projenin Redux store'unu tanımlıyor ve yönetiyor, ayrıca reducer'ları, actions'ları ve async işlemleri içeriyor ve bu sayede projedeki global durumu (state) kontrol ediyor.
 
+Uygulamanın kullanımı:
+![1](https://github.com/betulyurtman/Front_End-Bootcamp-Final-Project/assets/96620871/08a89910-e945-42ed-a2c9-33d416fc9056)
