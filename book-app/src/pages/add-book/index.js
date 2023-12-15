@@ -5,6 +5,8 @@ import { addNewBook } from '../../store/bookSlice';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+// Defines a Yup validation schema using the Yup.object function.
+// Specifies validation rules for the title, author, pageCount, and thumbnail fields.
 const validationSchema = Yup.object({
   title: Yup.string().required('Title is required'),
   author: Yup.string().required('Author is required'),
@@ -12,6 +14,9 @@ const validationSchema = Yup.object({
   thumbnail: Yup.string().url('Enter a valid URL').required('Image URL is required'),
 });
 
+// Sets up the NewBook functional component.
+// Uses the useDispatch hook to get access to the Redux store's dispatch function.
+// Uses Formik's useFormik hook to initialize form values, validation, and submission handling.
 const NewBook = () => {
   const dispatch = useDispatch();
 
@@ -31,9 +36,12 @@ const NewBook = () => {
 
   return (
     <Container maxWidth="sm">
+      {/* Title for the page. */}
       <Typography variant="h4" align="center" gutterBottom>
         Add a New Book
       </Typography>
+
+      {/* Form to add new book. */}
       <form onSubmit={formik.handleSubmit}>
         <TextField
           label="Title"
@@ -45,6 +53,7 @@ const NewBook = () => {
           fullWidth
           margin="normal"
         />
+
         <TextField
           label="Author"
           name="author"
@@ -55,6 +64,7 @@ const NewBook = () => {
           fullWidth
           margin="normal"
         />
+
         <TextField
           label="Page Count"
           name="pageCount"
@@ -66,6 +76,7 @@ const NewBook = () => {
           fullWidth
           margin="normal"
         />
+
         <TextField
           label="Image URL"
           name="thumbnail"
@@ -76,6 +87,8 @@ const NewBook = () => {
           fullWidth
           margin="normal"
         />
+
+        {/* Button to add a new book. */}
         <Button type="submit" variant="contained" color="primary">
           Add Book
         </Button>

@@ -12,18 +12,21 @@ const BookDetails = () => {
   const dispatch = useDispatch();
   const { books, loadingBooks, error } = useSelector((state) => state.books);
 
+  // Utilizes the useEffect hook to fetch books when the component mounts. The effect runs if the books array is empty, preventing unnecessary refetching.
   useEffect(() => {
     if (books.length === 0) {
       dispatch(fetchBooks());
     }
   }, [dispatch, books.length]);
 
+  // Retrieves the specific book using its id.
   const book = books.find((book) => book.id === id);
 
   if (loadingBooks) return <p>Loading...</p>;
   if (error) return <p>Error occurred: {error}</p>;
   if (!book) return <p>Book not found</p>;
 
+  // Book details.
   return (
     <Box sx={{ flexGrow: 1 }}>
       <Grid container spacing={2} justifyContent="center">

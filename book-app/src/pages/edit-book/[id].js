@@ -3,10 +3,9 @@ import { updateBookDetails } from '../../store/bookSlice';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import { Button, Container, Stack, TextField, Typography } from '@mui/material';
 
-// We can add validations using Yup.
+// Adding validations using Yup.
 const currentYear = new Date().getFullYear(); // Get the current year.
 
 const BookSchema = Yup.object().shape({
@@ -45,7 +44,7 @@ const EditBook = () => {
     initialValues: getInitialValues(),
     validationSchema: BookSchema,
     enableReinitialize: true, // This reinitializes formik when initialValues changes
-    onSubmit: (values) => {
+    onSubmit: (values) => { // Configures the onSubmit callback to dispatch the updateBookDetails action and redirect to the book details page.
       dispatch(updateBookDetails({ ...values, id }));
       router.push(`/book/${id}`);
     },
@@ -54,9 +53,13 @@ const EditBook = () => {
   return (
     <Container>
       <Stack spacing={2}>
+
+        {/* Title for the page. */}
         <Typography variant="h4" component="h1">
           Edit Book
         </Typography>
+
+        {/* Form to edit the book. */}
         <form onSubmit={formik.handleSubmit}>
           <TextField
             fullWidth
@@ -70,6 +73,7 @@ const EditBook = () => {
             helperText={formik.touched.title && formik.errors.title}
             onBlur={formik.handleBlur}
           />
+
           <TextField
             fullWidth
             id="author"
@@ -82,6 +86,7 @@ const EditBook = () => {
             helperText={formik.touched.author && formik.errors.author}
             onBlur={formik.handleBlur}
           />
+
           <TextField
             fullWidth
             id="pageCount"
@@ -95,6 +100,7 @@ const EditBook = () => {
             helperText={formik.touched.pageCount && formik.errors.pageCount}
             onBlur={formik.handleBlur}
           />
+
           <TextField
             fullWidth
             id="thumbnail"
@@ -108,6 +114,8 @@ const EditBook = () => {
             helperText={formik.touched.thumbnail && formik.errors.thumbnail}
             onBlur={formik.handleBlur}
           />
+
+          {/* Button to update the book. */}
           <Button color="error" variant="contained" fullWidth type="submit">
             Update Book
           </Button>
