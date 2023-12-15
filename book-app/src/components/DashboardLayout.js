@@ -42,7 +42,7 @@ const DashboardLayout = ({ children }) => {
           <Typography 
               variant="h4" 
               component="div" 
-              sx={{ flexGrow: 1, marginLeft: 72 }}
+              sx={{ flexGrow: 1 }}
           >
               Books for Book Lovers
           </Typography>
