@@ -51,8 +51,8 @@ const EditBook = () => {
       <Stack spacing={2}>
 
         {/* Title for the page. */}
-        <Typography variant="h4" component="h1">
-          Edit Book
+        <Typography variant="h4" align="center" component="h1">
+          Update the Book
         </Typography>
 
         {/* Form to edit the book. */}
@@ -112,7 +112,7 @@ const EditBook = () => {
           />
 
           {/* Button to update the book. */}
-          <Button color="error" variant="contained" fullWidth type="submit">
+          <Button color="error" variant="contained" type="submit">
             Update Book
           </Button>
         </form>

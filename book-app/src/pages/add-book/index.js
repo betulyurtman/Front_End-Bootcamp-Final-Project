@@ -35,7 +35,7 @@ const NewBook = () => {
   });
 
   return (
-    <Container maxWidth="sm">
+    <Container>
       {/* Title for the page. */}
       <Typography variant="h4" align="center" gutterBottom>
         Add a New Book
