@@ -6,13 +6,9 @@ import { useRouter } from 'next/router';
 import { Button, Container, Stack, TextField, Typography } from '@mui/material';
 
 // Adding validations using Yup.
-const currentYear = new Date().getFullYear(); // Get the current year.
-
 const BookSchema = Yup.object().shape({
     title: Yup.string().required('Title is required'),
-    publishedDate: Yup.number()
-      .integer('Published year must be an integer')
-      .max(currentYear, 'Published year cannot be bigger than current year.'),
+    author: Yup.string().required('Author is required'),
     pageCount: Yup.number()
       .integer('Page count must be an integer')
   });
